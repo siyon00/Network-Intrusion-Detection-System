@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Network Intrusion Detection System</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Network Intrusion Detection System</h1>
+      <form action="/predict" method="post">
+        <label for="duration">Duration:</label>
+        <input type="text" name="duration" required />
+        <label for="src_bytes">Source Bytes:</label>
+        <input type="text" name="src_bytes" required />
+        <label for="dst_bytes">Destination Bytes:</label>
+        <input type="text" name="dst_bytes" required />
+        <label for="logged_in">Logged In (0 or 1):</label>
+        <input type="text" name="logged_in" required />
+        <label for="wrong_fragment">Wrong Fragment:</label>
+        <input type="text" name="wrong_fragment" required />
+        <label for="same_srv_rate">Same Service Rate:</label>
+        <input type="text" name="same_srv_rate" required />
+        <label for="srv_count">Service Count:</label>
+        <input type="text" name="srv_count" required />
+        <label for="protocol_type">Protocol Type:</label>
+        <select name="protocol_type">
+          <option value="tcp">TCP</option>
+          <option value="udp">UDP</option>
+          <option value="icmp">ICMP</option>
+        </select>
+        <label for="service">Service:</label>
+        <select name="service">
+          <option value="http">HTTP</option>
+          <option value="private">Private</option>
+          <option value="domain_u">Domain U</option>
+          <option value="smtp">SMTP</option>
+          <option value="ftp_data">FTP Data</option>
+        </select>
+        <label for="flag">Flag:</label>
+        <select name="flag">
+          <option value="SF">SF</option>
+          <option value="S0">S0</option>
+          <option value="REJ">REJ</option>
+          <option value="RSTR">RSTR</option>
+          <option value="RSTO">RSTO</option>
+        </select>
+        <button type="submit">Predict</button>
+      </form>
+
+      {% if prediction %}
+      <h2>Prediction Results:</h2>
+      <ul>
+        <li>
+          Logistic Regression Prediction: {{ prediction.logistic_regression }}
+        </li>
+        <li>Random Forest Prediction: {{ prediction.random_forest }}</li>
+        <li>SVM Prediction: {{ prediction.svm }}</li>
+      </ul>
+      {% endif %}
+    </div>
+  </body>
+</html>
